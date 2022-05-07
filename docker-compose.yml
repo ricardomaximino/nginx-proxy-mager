@@ -19,6 +19,9 @@ services:
       - ./letsencrypt:/etc/letsencrypt
     depends_on:
       - db
+    networks:
+      - keycloak_default
+      - nginx_network
   
   db:
     image: 'jc21/mariadb-aria:latest'
@@ -32,3 +35,11 @@ services:
       - '3305:3306'
     volumes:
       - ./data/mysql:/var/lib/mysql
+    networks:
+      - nginx_network
+
+networks:
+  keycloak_default:
+    name: keycloak_default
+  nginx_network:
+    name: nginx_network
